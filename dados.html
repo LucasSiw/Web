@@ -12,7 +12,7 @@
         <div class="container">
             <h1 class="display-5">Gasto Certo</h1>
             <p class="lead">Seu parceiro no controle financeiro pessoal</p>
-            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">LoginCadastro</a>
+            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">Login/Cadastro</a>
         </div>
     </header>
 
@@ -78,8 +78,14 @@
                 </div>
             </div>
 
-            <div class="text-center mt-4 py-5">
-                <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+            <div class="row">
+                <div class="col text-center mt-4 py-5">
+                    <button class="btn btn-primary" onclick="viewGraph()">Ver Gráfico</button>
+                </div>
+    
+                <div class="col text-center mt-4 py-5">
+                    <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+                </div>
             </div>
         </div>
     </section>
@@ -93,26 +99,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        function addEntry() {
-            const category = document.getElementById('category').value;
-            const description = document.getElementById('description').value;
-            const value = document.getElementById('value').value;
-            const date = document.getElementById('date').value;
-
-            if (category && description && value && date) {
-                const entry = { category, description, value, date };
-                let entries = JSON.parse(localStorage.getItem('financeEntries')) || [];
-                entries.push(entry);
-                localStorage.setItem('financeEntries', JSON.stringify(entries));
-
-                document.getElementById('financeForm').reset();
-                alert('Entrada adicionada com sucesso!');
-            } else {
-                alert('Por favor, preencha todos os campos.');
-            }
-        }
-    </script>
+    <script src="js/dados.js"></script>
 </body>
 </html>

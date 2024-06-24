@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Certo - Resumo Financeiro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/LogoSemFundo.png" type="image/x-icon">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            const financeEntries = JSON.parse(localStorage.getItem('financeEntries')) || [];
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'Mês');
+            data.addColumn('number', 'Receitas');
+            data.addColumn('number', 'Despesas');
+
+            const summary = financeEntries.reduce((acc, entry) => {
+                const month = new Date(entry.date).toLocaleString('default', { month: 'long' });
+                if (!acc[month]) acc[month] = { receitas: 0, despesas: 0 };
+                if (entry.category === 'Receita') {
+                    acc[month].receitas += parseFloat(entry.value);
+                } else {
+                    acc[month].despesas += parseFloat(entry.value);
+                }
+                return acc;
+            }, {});
+
+            for (const month in summary) {
+                data.addRow([month, summary[month].receitas, summary[month].despesas]);
+            }
+
+            const options = {
+                title: 'Resumo Financeiro Mensal',
+                hAxis: { title: 'Mês' },
+                vAxis: { title: 'Valor (R$)' },
+                seriesType: 'bars',
+                series: { 2: { type: 'line' } },
+                width: '100%',
+                height: '500px'
+            };
+
+            const chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5" id="topo">
+        <div class="container">
+            <h1 class="display-5">Gasto Certo</h1>
+            <p class="lead">Seu parceiro no controle financeiro pessoal</p>
+            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">Login/Cadastro</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <p class="text-center display-4">Resumo Financeiro</p>
+            <div id="chart_div" class="mt-4"></div>
+            <div class="text-center mt-4 py-5">
+                <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Gasto Certo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

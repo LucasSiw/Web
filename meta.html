@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Certo - Metas Financeiras</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/LogoSemFundo.png" type="image/x-icon">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            const goals = JSON.parse(localStorage.getItem('financeGoals')) || [];
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'Meta');
+            data.addColumn('number', 'Progresso (%)');
+
+            goals.forEach(goal => {
+                data.addRow([goal.description, (goal.currentAmount / goal.targetAmount) * 100]);
+            });
+
+            const options = {
+                title: 'Progresso das Metas Financeiras',
+                width: '100%',
+                height: '500px',
+                pieHole: 0.4
+            };
+
+            const chart = new google.visualization.PieChart(document.getElementById('goal_chart'));
+            chart.draw(data, options);
+        }
+
+        function addGoal() {
+            const description = document.getElementById('goalDescription').value;
+            const targetAmount = parseFloat(document.getElementById('goalTargetAmount').value);
+            const currentAmount = parseFloat(document.getElementById('goalCurrentAmount').value);
+
+            if (description && targetAmount && currentAmount) {
+                const goal = { description, targetAmount, currentAmount };
+                let goals = JSON.parse(localStorage.getItem('financeGoals')) || [];
+                goals.push(goal);
+                localStorage.setItem('financeGoals', JSON.stringify(goals));
+
+                document.getElementById('goalForm').reset();
+                drawChart();
+                alert('Meta adicionada com sucesso!');
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5" id="topo">
+        <div class="container">
+            <h1 class="display-5">Gasto Certo</h1>
+            <p class="lead">Seu parceiro no controle financeiro pessoal</p>
+            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">Login/Cadastro</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <p class="text-center display-4">Definir Metas Financeiras</p>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form id="goalForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="goalDescription">Descrição da Meta</label>
+                                <input type="text" class="form-control" id="goalDescription" placeholder="Descrição">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="goalTargetAmount">Valor Alvo (R$)</label>
+                                <input type="number" class="form-control" id="goalTargetAmount" placeholder="Valor Alvo">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="goalCurrentAmount">Valor Atual (R$)</label>
+                                <input type="number" class="form-control" id="goalCurrentAmount" placeholder="Valor Atual">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" onclick="addGoal()">Adicionar Meta</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="goal_chart" class="mt-4"></div>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Gasto Certo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
