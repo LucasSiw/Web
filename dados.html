@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Certo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/LogoSemFundo.png" type="image/x-icon">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5" id="topo">
+        <div class="container">
+            <h1 class="display-5">Gasto Certo</h1>
+            <p class="lead">Seu parceiro no controle financeiro pessoal</p>
+            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">Login</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <p class="text-center display-4">Adicionar Dados</p>
+
+            <div class="form-group row justify-content-center">
+                <label for="monthSelect" class="col-sm-2 col-form-label text-right">Selecione o mês:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="monthSelect">
+                        <option value="january">Janeiro</option>
+                        <option value="february">Fevereiro</option>
+                        <option value="march">Março</option>
+                        <option value="april">Abril</option>
+                        <option value="may">Maio</option>
+                        <option value="june">Junho</option>
+                        <option value="july">Julho</option>
+                        <option value="august">Agosto</option>
+                        <option value="september">Setembro</option>
+                        <option value="october">Outubro</option>
+                        <option value="november">Novembro</option>
+                        <option value="december">Dezembro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form id="financeForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="category">Categoria</label>
+                                <select id="category" class="form-control">
+                                    <option selected>Escolher...</option>
+                                    <option value="Receita">Receita</option>
+                                    <option value="Despesa">Despesa</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="description">Descrição</label>
+                                <select id="description" class="form-control">
+                                    <option selected>Escolher...</option>
+                                    <option value="Aluguel">Aluguel</option>
+                                    <option value="Salário">Salário</option>
+                                    <option value="Vendas">Vendas</option>
+                                    <option value="Freelance">Freelance</option>
+                                    <option value="Supermercado">Supermercado</option>
+                                    <option value="Transporte">Transporte</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="value">Valor (R$)</label>
+                                <input type="number" class="form-control" id="value" placeholder="Valor">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="date">Data</label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" onclick="addEntry()">Adicionar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4 py-5">
+                <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Gasto Certo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function addEntry() {
+            const category = document.getElementById('category').value;
+            const description = document.getElementById('description').value;
+            const value = document.getElementById('value').value;
+            const date = document.getElementById('date').value;
+
+            if (category && description && value && date) {
+                const entry = { category, description, value, date };
+                let entries = JSON.parse(localStorage.getItem('financeEntries')) || [];
+                entries.push(entry);
+                localStorage.setItem('financeEntries', JSON.stringify(entries));
+
+                document.getElementById('financeForm').reset();
+                alert('Entrada adicionada com sucesso!');
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+    </script>
+</body>
+</html>

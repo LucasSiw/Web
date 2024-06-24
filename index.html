@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Certo - Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-5">Gasto Certo</h1>
+            <p class="lead">Seu parceiro no controle financeiro pessoal</p>
+            <a href="login.html" class="btn btn-light position-absolute" style="top: 65px; right: 60px;">Login</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <p class="text-center display-4">Dashboard Gasto Certo</p>
+
+            <div class="form-group row justify-content-center">
+                <label for="monthSelect" class="col-sm-2 col-form-label text-right">Filtrar por mês:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="monthSelect">
+                        <option value="all">Todos os meses</option>
+                        <option value="january">Janeiro</option>
+                        <option value="february">Fevereiro</option>
+                        <option value="march">Março</option>
+                        <option value="april">Abril</option>
+                        <option value="may">Maio</option>
+                        <option value="june">Junho</option>
+                        <option value="july">Julho</option>
+                        <option value="august">Agosto</option>
+                        <option value="september">Setembro</option>
+                        <option value="october">Outubro</option>
+                        <option value="november">Novembro</option>
+                        <option value="december">Dezembro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
+                            <th>Valor (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="financeData">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4 py-5">
+                <a href="dados.html" class="btn btn-primary">Adicionar Dados</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 Gasto Certo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/inicial.js"></script>
+</body>
+</html>
